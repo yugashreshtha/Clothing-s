@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aureline Atelier — Luxury Fashion Sample</title>
+  <meta name="description" content="A premium luxury fashion website sample inspired by modern editorial fashion houses." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#090909;
+      --bg-soft:#121212;
+      --panel:#151515;
+      --line:rgba(255,255,255,0.12);
+      --line-soft:rgba(255,255,255,0.08);
+      --text:#f5f1e8;
+      --muted:#c8c1b4;
+      --soft:#9f9788;
+      --gold:#d3b06a;
+      --gold-soft:#f1ddaa;
+      --ivory:#f4efe5;
+      --shadow:0 25px 80px rgba(0,0,0,.34);
+      --max:1400px;
+      --radius:22px;
+      --ease:cubic-bezier(.22,1,.36,1);
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      background:
+        radial-gradient(circle at top right, rgba(211,176,106,.12), transparent 24%),
+        radial-gradient(circle at bottom left, rgba(255,255,255,.06), transparent 24%),
+        var(--bg);
+      color:var(--text);
+      font-family:'Inter',system-ui,sans-serif;
+      overflow-x:hidden;
+    }
+
+    img{max-width:100%;display:block}
+    a{text-decoration:none;color:inherit}
+    button{font:inherit}
+
+    .container{width:min(calc(100% - 32px),var(--max));margin:0 auto}
+
+    .eyebrow{
+      letter-spacing:.24em;
+      text-transform:uppercase;
+      font-size:.72rem;
+      color:var(--gold-soft);
+    }
+
+    .announcement{
+      position:relative;
+      z-index:30;
+      border-bottom:1px solid var(--line-soft);
+      background:rgba(8,8,8,.86);
+      backdrop-filter:blur(10px);
+    }
+
+    .announcement-track{
+      display:flex;
+      gap:48px;
+      padding:12px 0;
+      white-space:nowrap;
+      min-width:max-content;
+      animation:ticker 22s linear infinite;
+      color:#ddd3c2;
+      font-size:.84rem;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+
+    @keyframes ticker{
+      from{transform:translateX(0)}
+      to{transform:translateX(-50%)}
+    }
+
+    header{
+      position:sticky;
+      top:0;
+      z-index:25;
+      background:rgba(9,9,9,.74);
+      backdrop-filter:blur(16px);
+      border-bottom:1px solid var(--line-soft);
+    }
+
+    .nav{
+      min-height:78px;
+      display:grid;
+      grid-template-columns:1fr auto 1fr;
+      align-items:center;
+      gap:16px;
+    }
+
+    .nav-left,.nav-right{
+      display:flex;
+      align-items:center;
+      gap:20px;
+    }
+
+    .nav-right{justify-content:flex-end}
+
+    .menu-btn,.icon-btn,.ghost-btn,.primary-btn,.outline-btn{
+      border:none;
+      background:none;
+      color:inherit;
+      cursor:pointer;
+      padding:0;
+    }
+
+    .menu-btn{
+      display:inline-flex;
+      align-items:center;
+      gap:12px;
+      color:var(--muted);
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-size:.78rem;
+    }
+
+    .menu-lines{
+      width:24px;
+      height:12px;
+      position:relative;
+    }
+
+    .menu-lines::before,.menu-lines::after{
+      content:"";
+      position:absolute;
+      left:0;
+      width:100%;
+      height:1px;
+      background:var(--ivory);
+      transition:transform .35s var(--ease), top .35s var(--ease), opacity .35s var(--ease);
+    }
+
+    .menu-lines::before{top:0}
+    .menu-lines::after{top:10px}
+
+    body.menu-open .menu-lines::before{top:5px;transform:rotate(45deg)}
+    body.menu-open .menu-lines::after{top:5px;transform:rotate(-45deg)}
+
+    .nav-link{
+      color:var(--muted);
+      font-size:.88rem;
+      position:relative;
+    }
+
+    .nav-link::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:-8px;
+      width:100%;
+      height:1px;
+      background:var(--gold);
+      transform:scaleX(0);
+      transform-origin:right;
+      transition:transform .35s var(--ease);
+    }
+
+    .nav-link:hover::after{transform:scaleX(1);transform-origin:left}
+
+    .brand-mark{
+      display:inline-flex;
+      flex-direction:column;
+      align-items:center;
+      gap:5px;
+      text-align:center;
+    }
+
+    .brand-mark strong{
+      font-family:'Cormorant Garamond',serif;
+      font-size:2rem;
+      font-weight:600;
+      letter-spacing:.08em;
+    }
+
+    .brand-mark span{
+      font-size:.66rem;
+      letter-spacing:.32em;
+      text-transform:uppercase;
+      color:var(--soft);
+    }
+
+    .icon-btn{
+      color:var(--muted);
+      font-size:.86rem;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+    }
+
+    .menu-panel{
+      position:fixed;
+      inset:0;
+      z-index:40;
+      pointer-events:none;
+    }
+
+    .menu-backdrop{
+      position:absolute;
+      inset:0;
+      background:rgba(0,0,0,.55);
+      opacity:0;
+      transition:opacity .45s var(--ease);
+    }
+
+    .menu-drawer{
+      position:absolute;
+      inset:0 auto 0 0;
+      width:min(520px,100%);
+      background:linear-gradient(180deg,#0a0a0a,#121212);
+      border-right:1px solid var(--line);
+      transform:translateX(-100%);
+      transition:transform .5s var(--ease);
+      padding:32px;
+      display:flex;
+      flex-direction:column;
+      gap:28px;
+      overflow:auto;
+    }
+
+    body.menu-open .menu-panel{pointer-events:auto}
+    body.menu-open .menu-backdrop{opacity:1}
+    body.menu-open .menu-drawer{transform:translateX(0)}
+
+    .drawer-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      padding-bottom:18px;
+      border-bottom:1px solid var(--line-soft);
+    }
+
+    .close-btn{
+      border:1px solid var(--line);
+      color:var(--text);
+      background:rgba(255,255,255,.03);
+      padding:12px 18px;
+      border-radius:999px;
+      cursor:pointer;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      font-size:.72rem;
+    }
+
+    .drawer-links{
+      display:grid;
+      gap:14px;
+    }
+
+    .drawer-links a{
+      font-family:'Cormorant Garamond',serif;
+      font-size:2.2rem;
+      padding:6px 0;
+      color:var(--ivory);
+    }
+
+    .drawer-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:14px;
+    }
+
+    .drawer-card{
+      border:1px solid var(--line-soft);
+      background:rgba(255,255,255,.03);
+      border-radius:18px;
+      padding:18px;
+      min-height:140px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+
+    .drawer-card p{margin:0;color:var(--muted);line-height:1.6;font-size:.92rem}
+
+    .hero{
+      position:relative;
+      min-height:100vh;
+      display:flex;
+      align-items:flex-end;
+      isolation:isolate;
+      overflow:hidden;
+      border-bottom:1px solid var(--line-soft);
+    }
+
+    .hero-media{
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(180deg,rgba(0,0,0,.16),rgba(0,0,0,.42) 40%,rgba(0,0,0,.74)),
+        url('https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+      transform:scale(1.04);
+      animation:slowZoom 18s ease-in-out infinite alternate;
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:radial-gradient(circle at 78% 20%, rgba(211,176,106,.16), transparent 18%);
+      z-index:-1;
+    }
+
+    @keyframes slowZoom{
+      from{transform:scale(1.04)}
+      to{transform:scale(1.12)}
+    }
+
+    .hero-content{
+      position:relative;
+      z-index:1;
+      width:min(calc(100% - 32px), var(--max));
+      margin:0 auto;
+      padding:140px 0 72px;
+      display:grid;
+      grid-template-columns:minmax(0, 820px) 1fr;
+      gap:32px;
+      align-items:end;
+    }
+
+    .hero-copy h1{
+      margin:14px 0 18px;
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(3.8rem,9vw,7.7rem);
+      line-height:.88;
+      font-weight:600;
+      max-width:8.2ch;
+    }
+
+    .hero-copy p{
+      max-width:580px;
+      font-size:1.02rem;
+      line-height:1.9;
+      color:#e7dece;
+      margin:0 0 28px;
+    }
+
+    .cta-row{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .primary-btn,.outline-btn,.ghost-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+      padding:15px 22px;
+      border-radius:999px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-size:.76rem;
+      transition:transform .35s var(--ease), background .35s var(--ease), border-color .35s var(--ease), color .35s var(--ease), box-shadow .35s var(--ease);
+    }
+
+    .primary-btn{
+      background:linear-gradient(135deg,var(--gold),#b6904f);
+      color:#15110a;
+      box-shadow:0 20px 50px rgba(211,176,106,.2);
+    }
+
+    .outline-btn{
+      border:1px solid rgba(255,255,255,.18);
+      color:var(--text);
+      background:rgba(255,255,255,.04);
+      backdrop-filter:blur(8px);
+    }
+
+    .ghost-btn{
+      border:1px solid var(--line);
+      color:var(--muted);
+      background:rgba(255,255,255,.03);
+      width:fit-content;
+    }
+
+    .primary-btn:hover,.outline-btn:hover,.ghost-btn:hover{
+      transform:translateY(-3px);
+    }
+
+    .hero-side{
+      justify-self:end;
+      display:grid;
+      gap:16px;
+      width:min(100%, 320px);
+    }
+
+    .floating-card{
+      background:rgba(9,9,9,.45);
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter:blur(14px);
+      border-radius:24px;
+      padding:22px;
+      box-shadow:var(--shadow);
+    }
+
+    .floating-card p{margin:8px 0 0;color:var(--muted);line-height:1.7;font-size:.94rem}
+    .floating-card strong{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600}
+
+    .section{
+      padding:92px 0;
+      position:relative;
+    }
+
+    .section-head{
+      display:flex;
+      justify-content:space-between;
+      gap:20px;
+      align-items:end;
+      margin-bottom:32px;
+    }
+
+    .section-head h2{
+      margin:10px 0 0;
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(2.4rem,4vw,4rem);
+      line-height:.95;
+      font-weight:600;
+    }
+
+    .section-head p{
+      max-width:560px;
+      margin:0;
+      color:var(--muted);
+      line-height:1.85;
+    }
+
+    .collections-grid{
+      display:grid;
+      grid-template-columns:1.2fr .8fr .8fr;
+      gap:20px;
+    }
+
+    .collection-card{
+      position:relative;
+      min-height:580px;
+      border-radius:30px;
+      overflow:hidden;
+      background:#111;
+      border:1px solid var(--line-soft);
+      box-shadow:var(--shadow);
+    }
+
+    .collection-card img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      transition:transform 1s var(--ease), filter .7s var(--ease);
+      filter:saturate(.92);
+    }
+
+    .collection-card:hover img{
+      transform:scale(1.08);
+      filter:saturate(1);
+    }
+
+    .card-overlay{
+      position:absolute;
+      inset:auto 0 0 0;
+      padding:26px;
+      background:linear-gradient(180deg,transparent,rgba(0,0,0,.82));
+      display:grid;
+      gap:12px;
+    }
+
+    .card-overlay h3{
+      margin:0;
+      font-family:'Cormorant Garamond',serif;
+      font-size:2.25rem;
+      font-weight:600;
+    }
+
+    .card-overlay p{
+      margin:0;
+      max-width:36ch;
+      color:#ddd3c2;
+      line-height:1.7;
+    }
+
+    .editorial{
+      display:grid;
+      grid-template-columns:.95fr 1.05fr;
+      gap:26px;
+      align-items:stretch;
+    }
+
+    .editorial-copy,.editorial-media{
+      border-radius:30px;
+      overflow:hidden;
+      border:1px solid var(--line-soft);
+      background:rgba(255,255,255,.03);
+      box-shadow:var(--shadow);
+    }
+
+    .editorial-copy{
+      padding:44px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap:18px;
+      min-height:620px;
+    }
+
+    .editorial-copy h3{
+      margin:0;
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(2.2rem,4vw,4.3rem);
+      line-height:.96;
+      font-weight:600;
+      max-width:8ch;
+    }
+
+    .editorial-copy p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.9;
+      max-width:55ch;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+      margin-top:12px;
+    }
+
+    .stat{
+      padding:18px;
+      border-radius:20px;
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--line-soft);
+    }
+
+    .stat strong{
+      display:block;
+      font-size:1.8rem;
+      font-family:'Cormorant Garamond',serif;
+      font-weight:600;
+      margin-bottom:6px;
+    }
+
+    .stat span{color:var(--soft);font-size:.88rem;line-height:1.6}
+
+    .editorial-media img{
+      width:100%;
+      height:100%;
+      min-height:620px;
+      object-fit:cover;
+    }
+
+    .products{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:18px;
+    }
+
+    .product{
+      border:1px solid var(--line-soft);
+      border-radius:24px;
+      overflow:hidden;
+      background:rgba(255,255,255,.03);
+      transition:transform .45s var(--ease), border-color .45s var(--ease), background .45s var(--ease);
+    }
+
+    .product:hover{
+      transform:translateY(-6px);
+      border-color:rgba(211,176,106,.34);
+      background:rgba(255,255,255,.045);
+    }
+
+    .product-media{
+      aspect-ratio:4/5;
+      overflow:hidden;
+      background:#0f0f0f;
+    }
+
+    .product-media img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      transition:transform .8s var(--ease);
+    }
+
+    .product:hover .product-media img{transform:scale(1.06)}
+
+    .product-body{padding:18px 18px 22px}
+
+    .product-body h4{
+      margin:0 0 8px;
+      font-size:1rem;
+      font-weight:500;
+    }
+
+    .product-body p{
+      margin:0 0 14px;
+      color:var(--soft);
+      line-height:1.7;
+      font-size:.92rem;
+    }
+
+    .product-meta{
+      display:flex;
+      justify-content:space-between;
+      gap:8px;
+      align-items:center;
+    }
+
+    .product-meta span:first-child{
+      color:var(--gold-soft);
+      font-size:.82rem;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+    }
+
+    .product-meta strong{font-weight:500}
+
+    .craft{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:22px;
+    }
+
+    .craft-card{
+      min-height:460px;
+      position:relative;
+      border-radius:28px;
+      overflow:hidden;
+      border:1px solid var(--line-soft);
+      background:#121212;
+    }
+
+    .craft-card img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .craft-text{
+      position:absolute;
+      inset:auto 0 0 0;
+      padding:26px;
+      background:linear-gradient(180deg,transparent,rgba(0,0,0,.86));
+    }
+
+    .craft-text h3{
+      margin:0 0 8px;
+      font-family:'Cormorant Garamond',serif;
+      font-size:2.25rem;
+      font-weight:600;
+    }
+
+    .craft-text p{margin:0;color:#d7cebf;line-height:1.75;max-width:44ch}
+
+    .experience{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:22px;
+    }
+
+    .experience-panel,.experience-list{
+      border-radius:28px;
+      border:1px solid var(--line-soft);
+      background:rgba(255,255,255,.03);
+      overflow:hidden;
+    }
+
+    .experience-panel{
+      padding:42px;
+      min-height:520px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap:20px;
+    }
+
+    .experience-panel h3{
+      margin:0;
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(2.3rem,4vw,4.1rem);
+      line-height:.96;
+      font-weight:600;
+      max-width:9ch;
+    }
+
+    .experience-panel p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.85;
+      max-width:56ch;
+    }
+
+    .experience-list{
+      padding:16px;
+      display:grid;
+      gap:14px;
+    }
+
+    .experience-item{
+      border:1px solid var(--line-soft);
+      border-radius:20px;
+      padding:20px;
+      background:rgba(255,255,255,.02);
+    }
+
+    .experience-item strong{
+      display:block;
+      margin-bottom:8px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      font-size:.78rem;
+      color:var(--gold-soft);
+    }
+
+    .experience-item p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.8;
+      font-size:.95rem;
+    }
+
+    .newsletter{
+      padding:0 0 100px;
+    }
+
+    .newsletter-wrap{
+      border:1px solid rgba(211,176,106,.18);
+      background:
+        radial-gradient(circle at top right, rgba(211,176,106,.12), transparent 20%),
+        linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border-radius:34px;
+      padding:40px;
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:20px;
+      align-items:center;
+      box-shadow:var(--shadow);
+    }
+
+    .newsletter-wrap h2{
+      margin:10px 0 10px;
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(2.2rem,4vw,4rem);
+      line-height:.95;
+      font-weight:600;
+    }
+
+    .newsletter-wrap p{
+      margin:0;
+      color:var(--muted);
+      max-width:54ch;
+      line-height:1.85;
+    }
+
+    .newsletter-form{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .newsletter-form input{
+      min-width:min(100%,320px);
+      padding:16px 20px;
+      background:rgba(255,255,255,.04);
+      border:1px solid var(--line);
+      border-radius:999px;
+      color:var(--text);
+      outline:none;
+    }
+
+    footer{
+      border-top:1px solid var(--line-soft);
+      padding:24px 0 36px;
+      color:var(--soft);
+    }
+
+    .footer-grid{
+      display:grid;
+      grid-template-columns:1.4fr 1fr 1fr 1fr;
+      gap:18px;
+      align-items:start;
+    }
+
+    .footer-brand strong{
+      display:block;
+      font-family:'Cormorant Garamond',serif;
+      font-size:1.8rem;
+      font-weight:600;
+      margin-bottom:10px;
+      color:var(--ivory);
+    }
+
+    .footer-brand p,.footer-col p{margin:0;line-height:1.8;font-size:.92rem}
+
+    .footer-col h4{
+      margin:0 0 12px;
+      color:var(--ivory);
+      font-size:.9rem;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      font-weight:500;
+    }
+
+    .footer-col{
+      display:grid;
+      gap:10px;
+    }
+
+    .reveal{
+      opacity:0;
+      transform:translateY(26px);
+      transition:opacity .9s var(--ease), transform .9s var(--ease);
+    }
+
+    .reveal.visible{
+      opacity:1;
+      transform:none;
+    }
+
+    @media (max-width: 1180px){
+      .collections-grid,
+      .editorial,
+      .craft,
+      .experience,
+      .newsletter-wrap,
+      .footer-grid,
+      .hero-content{
+        grid-template-columns:1fr;
+      }
+
+      .hero-side{justify-self:start;width:min(100%,420px)}
+      .products{grid-template-columns:repeat(2,1fr)}
+      .nav-left .nav-link,.nav-right .nav-link{display:none}
+      .newsletter-form{justify-content:flex-start}
+    }
+
+    @media (max-width: 760px){
+      .nav{
+        grid-template-columns:auto 1fr auto;
+      }
+
+      .brand-mark{
+        justify-self:center;
+      }
+
+      .brand-mark strong{font-size:1.45rem}
+      .brand-mark span{font-size:.54rem;letter-spacing:.22em}
+
+      .hero{
+        min-height:92vh;
+      }
+
+      .hero-content{
+        padding:124px 0 52px;
+      }
+
+      .hero-copy h1{max-width:10ch}
+      .hero-copy p{font-size:.96rem;line-height:1.8}
+      .section{padding:74px 0}
+      .section-head{margin-bottom:24px}
+
+      .collection-card{min-height:450px}
+      .editorial-copy,.experience-panel{padding:28px}
+      .editorial-copy,.editorial-media img{min-height:auto}
+      .products{grid-template-columns:1fr}
+      .stats{grid-template-columns:1fr}
+      .drawer-grid{grid-template-columns:1fr}
+      .newsletter-wrap{padding:28px}
+      .newsletter-form input{min-width:100%}
+      .footer-grid{grid-template-columns:1fr}
+      .craft-card{min-height:380px}
+      .menu-drawer{padding:24px 20px}
+      .drawer-links a{font-size:1.8rem}
+      .cta-row{width:100%}
+      .primary-btn,.outline-btn{width:100%}
+      .nav-right .icon-btn:first-child{display:none}
+    }
+  </style>
+</head>
+<body>
+  <div class="announcement">
+    <div class="container" style="overflow:hidden;">
+      <div class="announcement-track">
+        <span>New Winter Atelier Capsule</span>
+        <span>Private Styling Appointments Available</span>
+        <span>Complimentary Express Shipping Above ₹18,000</span>
+        <span>Crafted in Small Batches</span>
+        <span>New Winter Atelier Capsule</span>
+        <span>Private Styling Appointments Available</span>
+        <span>Complimentary Express Shipping Above ₹18,000</span>
+        <span>Crafted in Small Batches</span>
+      </div>
+    </div>
+  </div>
+
+  <header>
+    <div class="container nav">
+      <div class="nav-left">
+        <button class="menu-btn" id="openMenu" aria-label="Open Menu">
+          <span class="menu-lines"></span>
+          <span>Menu</span>
+        </button>
+        <a href="#collections" class="nav-link">Collections</a>
+        <a href="#atelier" class="nav-link">Atelier</a>
+      </div>
+
+      <a href="#top" class="brand-mark" aria-label="Aureline Atelier home">
+        <strong>AURELINE</strong>
+        <span>Maison de vêtement</span>
+      </a>
+
+      <div class="nav-right">
+        <a href="#experience" class="nav-link">Experience</a>
+        <a href="#contact" class="nav-link">Contact</a>
+        <button class="icon-btn">Search</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="menu-panel" aria-hidden="true">
+    <div class="menu-backdrop" id="closeBackdrop"></div>
+    <aside class="menu-drawer">
+      <div class="drawer-top">
+        <div>
+          <div class="eyebrow">Aureline Atelier</div>
+          <strong style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:600;">Curated Luxury</strong>
+        </div>
+        <button class="close-btn" id="closeMenu">Close</button>
+      </div>
+
+      <nav class="drawer-links">
+        <a href="#collections">New Arrivals</a>
+        <a href="#editorial">Editorial</a>
+        <a href="#atelier">Craftsmanship</a>
+        <a href="#experience">Boutique Experience</a>
+        <a href="#contact">Client Services</a>
+      </nav>
+
+      <div class="drawer-grid">
+        <div class="drawer-card">
+          <div class="eyebrow">For Her</div>
+          <p>Silk tailoring, sculpted outerwear, fluid evening pieces and understated essentials.</p>
+        </div>
+        <div class="drawer-card">
+          <div class="eyebrow">For Him</div>
+          <p>Architectural jackets, cashmere layers, refined shirting and understated statement pieces.</p>
+        </div>
+        <div class="drawer-card">
+          <div class="eyebrow">Private Styling</div>
+          <p>Reserve an appointment for look-building, sizing support and wardrobe direction.</p>
+        </div>
+        <div class="drawer-card">
+          <div class="eyebrow">Limited Capsule</div>
+          <p>Made in small runs to preserve rarity, silhouette precision and elevated finishing.</p>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-media"></div>
+      <div class="hero-content">
+        <div class="hero-copy reveal visible">
+          <div class="eyebrow">Autumn / Winter 2026</div>
+          <h1>Quiet luxury, cut with intention.</h1>
+          <p>
+            A fashion-house inspired concept built for premium clothing brands — editorial in mood, restrained in color, and designed to make every collection feel rare, expensive, and memorable.
+          </p>
+          <div class="cta-row">
+            <a href="#collections" class="primary-btn">Explore Collection</a>
+            <a href="#editorial" class="outline-btn">View Lookbook</a>
+          </div>
+        </div>
+
+        <div class="hero-side reveal visible">
+          <div class="floating-card">
+            <div class="eyebrow">Featured Release</div>
+            <strong>The Nocturne Capsule</strong>
+            <p>Italian wool, fluid satin, matte leather trims, and tailored silhouettes shaped for evening light.</p>
+          </div>
+          <div class="floating-card">
+            <div class="eyebrow">Client Services</div>
+            <strong>Appointment Dressing</strong>
+            <p>Bring boutique elegance online with private styling, curated drops, and high-touch support.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="collections">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Collection Focus</div>
+            <h2>Designed to feel like a fashion house, not a marketplace.</h2>
+          </div>
+          <p>
+            Big luxury brands make their products feel valuable by slowing the user down: fewer colors, larger imagery, stronger typography, and more editorial breathing room. This layout follows that same logic.
+          </p>
+        </div>
+
+        <div class="collections-grid">
+          <article class="collection-card reveal">
+            <img src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=1200&q=80" alt="Luxury womenswear editorial" />
+            <div class="card-overlay">
+              <div class="eyebrow">Women's Wardrobe</div>
+              <h3>Evening Structure</h3>
+              <p>Architectural dresses, sculpted coats and tonal layering with a soft gold finish to the interface.</p>
+              <a class="ghost-btn" href="#">Discover Now</a>
+            </div>
+          </article>
+
+          <article class="collection-card reveal">
+            <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1200&q=80" alt="Luxury fashion detail" />
+            <div class="card-overlay">
+              <div class="eyebrow">Small Batch</div>
+              <h3>Capsule 01</h3>
+              <p>Sharp silhouettes, minimal palettes, and detail shots that elevate perceived value.</p>
+              <a class="ghost-btn" href="#">Shop Edit</a>
+            </div>
+          </article>
+
+          <article class="collection-card reveal">
+            <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=80" alt="Menswear luxury portrait" />
+            <div class="card-overlay">
+              <div class="eyebrow">Menswear</div>
+              <h3>Shadow Tailoring</h3>
+              <p>Clean forms, textured neutrals, and product storytelling that feels boutique-led.</p>
+              <a class="ghost-btn" href="#">View Pieces</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="editorial">
+      <div class="container editorial">
+        <div class="editorial-copy reveal">
+          <div class="eyebrow">Editorial Storytelling</div>
+          <h3>The premium feel comes from confidence, not noise.</h3>
+          <p>
+            Luxury clothing sites rarely scream discounts or overload the page with too many products at once. They make the collection feel curated, almost gallery-like. That same calm, high-control atmosphere is what this sample is built to deliver.
+          </p>
+          <p>
+            Use this structure for your own brand by replacing the copy, images, collection names, and product links — while keeping the restrained tone, strong whitespace, and editorial rhythm intact.
+          </p>
+          <div class="stats">
+            <div class="stat">
+              <strong>01</strong>
+              <span>Muted, premium palette with ivory, black, charcoal and soft metallic gold.</span>
+            </div>
+            <div class="stat">
+              <strong>02</strong>
+              <span>Collection-first sections that make fashion feel seasonal and deliberate.</span>
+            </div>
+            <div class="stat">
+              <strong>03</strong>
+              <span>Slow transitions, luxury serif typography and boutique-style navigation.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="editorial-media reveal">
+          <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1400&q=80" alt="Editorial fashion image" />
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="products">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Selected Pieces</div>
+            <h2>High-end product cards with softer selling.</h2>
+          </div>
+          <p>
+            The goal is not to look like fast fashion. Product modules here are quieter, image-led, and spaced to feel more exclusive.
+          </p>
+        </div>
+
+        <div class="products">
+          <article class="product reveal">
+            <div class="product-media"><img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80" alt="Luxury shirt" /></div>
+            <div class="product-body">
+              <h4>Atelier Silk Shirt</h4>
+              <p>Relaxed tailoring with a fluid drape and hidden placket finish.</p>
+              <div class="product-meta"><span>New arrival</span><strong>₹12,800</strong></div>
+            </div>
+          </article>
+
+          <article class="product reveal">
+            <div class="product-media"><img src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=900&q=80" alt="Luxury coat" /></div>
+            <div class="product-body">
+              <h4>Nocturne Long Coat</h4>
+              <p>Double-faced wool with structured shoulders and tonal hardware.</p>
+              <div class="product-meta"><span>Limited edition</span><strong>₹28,500</strong></div>
+            </div>
+          </article>
+
+          <article class="product reveal">
+            <div class="product-media"><img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=900&q=80" alt="Luxury dress" /></div>
+            <div class="product-body">
+              <h4>Midnight Column Dress</h4>
+              <p>Minimal lines, controlled sheen and a silhouette built for eveningwear.</p>
+              <div class="product-meta"><span>Signature piece</span><strong>₹19,600</strong></div>
+            </div>
+          </article>
+
+          <article class="product reveal">
+            <div class="product-media"><img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=900&q=80" alt="Luxury menswear blazer" /></div>
+            <div class="product-body">
+              <h4>Shadowline Blazer</h4>
+              <p>Soft structure, precision lapels and understated couture-inspired finishing.</p>
+              <div class="product-meta"><span>Boutique edit</span><strong>₹24,200</strong></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="atelier">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Craft & House Codes</div>
+            <h2>Luxury feels stronger when the brand tells a making story.</h2>
+          </div>
+          <p>
+            Premium brands do not only sell clothes. They sell creation, rarity, workmanship, and access. This section exists to build that exact emotional frame.
+          </p>
+        </div>
+
+        <div class="craft">
+          <article class="craft-card reveal">
+            <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=80" alt="Fashion atelier image" />
+            <div class="craft-text">
+              <div class="eyebrow">Hand-finished Details</div>
+              <h3>Cut to hold shape, not just trend.</h3>
+              <p>Tailored seams, refined trims and dense fabrics create a product story that feels enduring instead of disposable.</p>
+            </div>
+          </article>
+
+          <article class="craft-card reveal">
+            <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=1200&q=80" alt="Luxury boutique styling image" />
+            <div class="craft-text">
+              <div class="eyebrow">Maison Identity</div>
+              <h3>Made to be remembered in silence.</h3>
+              <p>The strongest luxury interfaces leave room for restraint: less shouting, stronger visuals, and a more cinematic pace.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="experience">
+      <div class="container experience">
+        <div class="experience-panel reveal">
+          <div class="eyebrow">Boutique Experience</div>
+          <h3>Client service should feel like a private room, not a checkout counter.</h3>
+          <p>
+            Inspired by fashion-house service language, this sample includes room for appointments, client advisors, size guidance, reserve-in-boutique flows, curated delivery messaging and post-purchase care.
+          </p>
+          <div class="cta-row">
+            <a href="#contact" class="primary-btn">Book Appointment</a>
+            <a href="#contact" class="outline-btn">Client Services</a>
+          </div>
+        </div>
+
+        <div class="experience-list reveal">
+          <div class="experience-item">
+            <strong>Private Styling</strong>
+            <p>1:1 sessions for wardrobe direction, gifting, event dressing and capsule planning.</p>
+          </div>
+          <div class="experience-item">
+            <strong>Boutique Pickup</strong>
+            <p>Reserve pieces online and collect them in-store with fitting assistance and finishing touches.</p>
+          </div>
+          <div class="experience-item">
+            <strong>Care & Repair</strong>
+            <p>Garment guidance, restoration support and premium aftercare to strengthen long-term brand value.</p>
+          </div>
+          <div class="experience-item">
+            <strong>Curated Drops</strong>
+            <p>Small seasonal releases displayed like exhibitions rather than endless inventory grids.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="newsletter" id="contact">
+      <div class="container newsletter-wrap reveal">
+        <div>
+          <div class="eyebrow">Join the House List</div>
+          <h2>For launch notices, private releases and styling appointments.</h2>
+          <p>
+            Replace this with your actual email capture or WhatsApp CTA. For a real business build, this section can connect to forms, CRMs, Shopify, or direct consultation booking.
+          </p>
+        </div>
+
+        <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Sample form only — connect this to your email platform or WhatsApp workflow.');">
+          <input type="email" placeholder="Enter your email address" aria-label="Email address" />
+          <button type="submit" class="primary-btn">Request Access</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <strong>AURELINE ATELIER</strong>
+        <p>
+          A luxury fashion website sample built for premium clothing brands that want an editorial, fashion-house identity online.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Collections</h4>
+        <p>Womenswear</p>
+        <p>Menswear</p>
+        <p>Capsules</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Services</h4>
+        <p>Styling Appointments</p>
+        <p>Boutique Pickup</p>
+        <p>Aftercare</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <p>hello@aurelineatelier.com</p>
+        <p>+91 90000 00000</p>
+        <p>Made as a premium sample</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const body = document.body;
+    const openMenu = document.getElementById('openMenu');
+    const closeMenu = document.getElementById('closeMenu');
+    const closeBackdrop = document.getElementById('closeBackdrop');
+
+    function toggleMenu(force){
+      const shouldOpen = typeof force === 'boolean' ? force : !body.classList.contains('menu-open');
+      body.classList.toggle('menu-open', shouldOpen);
+    }
+
+    openMenu?.addEventListener('click', () => toggleMenu(true));
+    closeMenu?.addEventListener('click', () => toggleMenu(false));
+    closeBackdrop?.addEventListener('click', () => toggleMenu(false));
+
+    document.querySelectorAll('.menu-drawer a').forEach(link => {
+      link.addEventListener('click', () => toggleMenu(false));
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') toggleMenu(false);
+    });
+
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: .16 });
+
+    document.querySelectorAll('.reveal').forEach(el => {
+      if(!el.classList.contains('visible')) observer.observe(el);
+    });
+  </script>
+</body>
+</html>
